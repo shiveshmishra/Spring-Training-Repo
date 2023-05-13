@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+																				http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	<!-- bean definitions here -->
+	<bean id="cust" class="com.spring.Customer">
+		<property name="custId" value="1001"></property>
+		<property name="custName" value="Anna"></property>
+	</bean>
+	<bean id="per" class="com.spring.Person">
+		<constructor-arg type="int" value="123"></constructor-arg>
+		<constructor-arg value="Alex"></constructor-arg>
+	</bean>
+	<!--Object Injection-->
+	<!--<bean id="cust1" class="com.spring.Customer">
+		<property name="custId" value="9999"></property>
+		<property name="custName" value="David"></property>
+		<property name="customerService" ref="custService"></property>
+	</bean>-->
+	<bean id="cust1" class="com.spring.Customer">
+		<constructor-arg type="int" value="8888"></constructor-arg>
+		<constructor-arg value="Soma"></constructor-arg>
+		<constructor-arg ref="custService"></constructor-arg>
+	</bean>
+	<bean id="custService" class="com.spring.dependent.CustomerService">
+		<property name="serviceName" value="DemoService"></property>
+		<property name="serviceType" value="ElectronicService"></property>
+	</bean>
+</beans>
