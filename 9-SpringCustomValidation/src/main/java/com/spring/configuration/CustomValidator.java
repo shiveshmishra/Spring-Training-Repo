@@ -1,0 +1,39 @@
+package com.spring.configuration;
+
+import java.util.regex.Pattern;
+
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+
+import com.spring.model.Customer;
+
+@Component
+public class CustomValidator implements Validator  {
+
+	@Override
+	public boolean supports(Class<?> clazz) {
+		// TODO Auto-generated method stub
+		return Customer.class.equals(clazz);
+	}
+
+	@Override
+	public void validate(Object target, Errors errors) {
+		
+		ValidationUtils.rejectIfEmpty(errors, "custId", "CustomerId should not be empty");
+		ValidationUtils.rejectIfEmpty(errors, "custName", "custName should not be empty");
+		ValidationUtils.rejectIfEmpty(errors, "custAddress", "custAddress should not be empty");
+		ValidationUtils.rejectIfEmpty(errors, "password", "password should not be empty");
+		
+		Customer customer=(Customer)target;
+		
+		Pattern pattern= Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$");
+		if(!pattern.matcher(customer.getPassword()).matches())
+		{
+			errors.rejectValue("password", "not valid password");
+		}
+	}
+
+	
+}
